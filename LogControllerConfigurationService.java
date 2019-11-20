@@ -49,8 +49,12 @@ public class LogControllerConfigurationService {
 				if (cachedConfigurations == null || cachedConfigurations.isEmpty()) {
 					List<LogControllerConfiguration> configurations = repository.findAll();
 					for (LogControllerConfiguration configuration : configurations) {
+						//TO get all the Requests where their parameters
+						cachedConfigurations.put(configuration.getUrlName(), configuration);
 						cachedConfigurations.put(configuration.getMethodName(), configuration);
+						requestConfigurations.put(configuration.getUrlName(), configuration);
 						requestConfigurations.put(configuration.getMethodName(), configuration);
+
 					}
 				}
 			} catch (Exception e) {
@@ -70,10 +74,7 @@ public class LogControllerConfigurationService {
 				Pattern methodPattern = Pattern.compile(logConfig.getMethodName());
 				Matcher methodmatch = methodPattern.matcher(method);
 
-				if (logConfig.getMethodName().equals("GET") && logConfig.getUrlName().equals(url))
-					return logConfig;
-
-				else if (urlmatch.matches() && methodmatch.matches())
+				if (urlmatch.matches() && methodmatch.matches())
 					return logConfig;
 			}
 		} catch (Exception e) {
