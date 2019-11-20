@@ -13,7 +13,7 @@ LogControllerConfiguration.java is the configuration file which is necessary bec
 
 LogControllerConfigurationRepository.java is the file for the connection of database.
 
-To run this first you need to put the mongoDB in the database with the name as "log-controller-configuration" and dependency(maven) of this Logging project in the project where you need to log.
+To run this first you need to put the mongoDB in the database with the name as "log-controller-configuration" and dependency(maven) of this Logging project in the project where you need to log. I have aslo added an extra feature for cacheService.It will first time take the data and store it into the cache, so whenever it has to look again into the database, it will simply look for that content into the cache not the database, making it time efficient. It will also clean the cache after every 30 minutes, in case if you made changes into the database.
 
 LocalLogControllerConfigurationRepository.java and LoggingGeneralConfigurations.java are the files which you need to put them into the project where you need this logging feature.
 LoggingGeneralConfigurations.java has BEANs in it.
