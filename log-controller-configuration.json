@@ -1,0 +1,63 @@
+{
+    "_id" : ObjectId("5dd44d9d129fd031f2c1ca1f"),
+    "methodName" : "DELETE",
+    "urlName" : "/audios/v1.0/(.)*",
+    "requestBody" : false,
+    "requestParameters" : false,
+    "responseBody" : false,
+    "requestBodyList" : [],
+    "responseBodyList" : []
+}
+
+{
+    "_id" : ObjectId("5dd467dc129fd031f2c2633f"),
+    "methodName" : "POST",
+    "urlName" : "/audios/v1.0/(.)*",
+    "requestBody" : false,
+    "requestParameters" : false,
+    "responseBody" : false,
+    "requestBodyList" : [],
+    "responseBodyList" : []
+}
+
+{
+    "_id" : ObjectId("5dd544d3129fd031f2c6482c"),
+    "methodName" : "PUT",
+    "urlName" : "/audios/v1.0/",
+    "requestBody" : false,
+    "requestParameters" : false,
+    "responseBody" : false,
+    "requestBodyList" : [],
+    "responseBodyList" : []
+}
+
+{
+    "_id" : ObjectId("5dd5716d129fd031f2c7241d"),
+    "methodName" : "GET",
+    "urlName" : "/audios/v1.0/findById",
+    "requestBody" : false,
+    "requestParameters" : true,
+    "responseBody" : true,
+    "requestBodyList" : [],
+    "responseBodyList" : [ 
+        "id", 
+        "voice", 
+        "userId", 
+        "type"
+    ]
+}
+
+{
+    "_id" : ObjectId("5dd57455129fd031f2c731c2"),
+    "methodName" : "GET",
+    "urlName" : "/audios/v1.0/",
+    "requestBody" : false,
+    "requestParameters" : true,
+    "responseBody" : true,
+    "requestBodyList" : [],
+    "responseBodyList" : [ 
+        "totalElements", 
+        "numberOfElements", 
+        "totalPages"
+    ]
+}
