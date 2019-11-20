@@ -38,8 +38,8 @@ public class RequestResponseLoggingFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		String logRequestTemplate = "[STARTED] [ #METHOD# REQUEST] [URL: #URL#] [REQUEST BODY: #REQUEST_BODY#]";
-		String logResponseTemplate = "[ENDED] [ #METHOD# REQUEST] [URL: #URL#] [RESPONSE BODY: #RESPONSE_BODY#] [EXECUTION TIME: #TIME# miliseconds ]";
+		String logRequestTemplate = "[ STARTED ][ #METHOD# REQUEST ][ URL: #URL# ][ REQUEST BODY: #REQUEST_BODY# ][URL PARAMETERS: #URL_PARAMETERS# ]";
+		String logResponseTemplate = "[ ENDED ][ #METHOD# REQUEST ][ URL: #URL# ][ RESPONSE BODY: #RESPONSE_BODY# ][EXECUTION TIME: #TIME# miliseconds ]";
 
 		long startTime = System.currentTimeMillis();
 		request.setAttribute("startTime", startTime);
@@ -67,9 +67,13 @@ public class RequestResponseLoggingFilter implements Filter {
 						}
 					}
 					if (!requestBody.isEmpty())
-						logRequestTemplate = logRequestTemplate.replace("[REQUEST BODY: #REQUEST_BODY#]",
-								"[RequestBody Parameters: " + configuration.getRequestBodyListParam() + " ]");
+						logRequestTemplate = logRequestTemplate.replace("#REQUEST_BODY#",
+								"" + configuration.getRequestBodyListParam());
 				}
+
+				if (configuration.isRequestParameters())
+					if (req.getQueryString() != null)
+						logRequestTemplate = logRequestTemplate.replace("#URL_PARAMETERS#", req.getQueryString());
 
 				logger.info(logRequestTemplate);
 				chain.doFilter(myRequestWrapper, res);
@@ -85,18 +89,12 @@ public class RequestResponseLoggingFilter implements Filter {
 						jsonObjectResponse = new JSONObject(responseBody);
 						configuration = logService.findResponseParameters(configuration, jsonObjectResponse);
 						responseBody.isEmpty();
-						logResponseTemplate = logResponseTemplate.replace("[RESPONSE BODY: #RESPONSE_BODY#]",
-								"[ResponseBody Parameters: " + configuration.getResponseBodyListParam() + " ]");
+						logResponseTemplate = logResponseTemplate.replace("#RESPONSE_BODY#",
+								"" + configuration.getResponseBodyListParam());
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
 				}
-
-				if (configuration.isRequestParameters() && configuration.isRequestBody())
-					if (req.getQueryString() != null)
-						logResponseTemplate = logResponseTemplate.replace("[RESPONSE BODY: #RESPONSE_BODY#]",
-								"[URL PARAMETERS: " + req.getQueryString() + " ]");
-
 				long meanTime = (long) request.getAttribute("startTime");
 				request.removeAttribute("meanTime");
 				long endTime = System.currentTimeMillis() - meanTime;
