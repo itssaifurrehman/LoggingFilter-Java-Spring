@@ -1,0 +1,7 @@
+import org.springframework.stereotype.Repository;
+
+import loggingservice.logutils.LogControllerConfigurationRepository;
+
+public interface LocalLogControllerConfigurationRepository extends LogControllerConfigurationRepository {
+
+}
