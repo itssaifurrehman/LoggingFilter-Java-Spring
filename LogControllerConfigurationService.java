@@ -1,3 +1,5 @@
+package com.telintel.services.loggingservice.logutils;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,12 +51,10 @@ public class LogControllerConfigurationService {
 				if (cachedConfigurations == null || cachedConfigurations.isEmpty()) {
 					List<LogControllerConfiguration> configurations = repository.findAll();
 					for (LogControllerConfiguration configuration : configurations) {
-						//TO get all the Requests where their parameters
-						cachedConfigurations.put(configuration.getUrlName(), configuration);
-						cachedConfigurations.put(configuration.getMethodName(), configuration);
-						requestConfigurations.put(configuration.getUrlName(), configuration);
-						requestConfigurations.put(configuration.getMethodName(), configuration);
-
+						cachedConfigurations.put(configuration.getUrlName() + "-" + configuration.getMethodName(),
+								configuration);
+						requestConfigurations.put(configuration.getUrlName() + "-" + configuration.getMethodName(),
+								configuration);
 					}
 				}
 			} catch (Exception e) {
@@ -71,10 +71,7 @@ public class LogControllerConfigurationService {
 				Pattern urlPattern = Pattern.compile(logConfig.getUrlName());
 				Matcher urlmatch = urlPattern.matcher(url);
 
-				Pattern methodPattern = Pattern.compile(logConfig.getMethodName());
-				Matcher methodmatch = methodPattern.matcher(method);
-
-				if (urlmatch.matches() && methodmatch.matches())
+				if (urlmatch.matches() && method.equalsIgnoreCase(logConfig.getMethodName()))
 					return logConfig;
 			}
 		} catch (Exception e) {
