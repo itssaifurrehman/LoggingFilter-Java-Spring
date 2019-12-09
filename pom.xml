@@ -2,6 +2,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.telintel.services.loggingservice.logutils</groupId>
+	<artifactId>loggingConfiguration</artifactId>
+	<name>loggingConfiguration</name>
+	<description>loggingConfiguration</description>
+	<version>1.1.0-SNAPSHOT</version>
+	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -9,10 +15,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>loggingservice.logutils</groupId>
-	<artifactId>logging-service-integration</artifactId>
-	<name>logging-service-integration</name>
-	<description>logging-service-integration</description>
+	
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -73,19 +76,9 @@
 			<version>1.1.1</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.0</version>
-		</dependency>
 
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.62</version>
-		</dependency>
+
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -99,5 +92,5 @@
 		</plugins>
 	</build>
 
-	<version>1.1.0-SNAPSHOT</version>
+	
 </project>
