@@ -104,7 +104,7 @@ public class RequestResponseLoggingFilter implements Filter {
 				logResponseTemplate = logResponseTemplate.replace("#TIME#", Long.toString(endTime));
 				logger.info(logResponseTemplate);
 			} else
-				System.out.println("[Error] [Request is not in database] [Check database]");
+				logger.info("[Error] [Request is not in database] [Check database]");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
