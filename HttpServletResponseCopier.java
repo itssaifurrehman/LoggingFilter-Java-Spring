@@ -1,3 +1,5 @@
+package com.telintel.services.loggingservice.logutils;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -13,6 +15,7 @@ public class HttpServletResponseCopier extends HttpServletResponseWrapper {
 
     public HttpServletResponseCopier(HttpServletResponse response) throws IOException {
         super(response);
+        getOutputStream();
     }
 
     @Override
@@ -24,7 +27,7 @@ public class HttpServletResponseCopier extends HttpServletResponseWrapper {
         if (outputStream == null) {
             outputStream = getResponse().getOutputStream();
             copier = new ServletOutputStreamCopier(outputStream);
-        }
+      }
 
         return copier;
     }
@@ -35,10 +38,10 @@ public class HttpServletResponseCopier extends HttpServletResponseWrapper {
             throw new IllegalStateException("getOutputStream() has already been called on this response.");
         }
 
-        if (writer == null) {
+       if (writer == null) {
             copier = new ServletOutputStreamCopier(getResponse().getOutputStream());
             writer = new PrintWriter(new OutputStreamWriter(copier, getResponse().getCharacterEncoding()), true);
-        }
+      }
 
         return writer;
     }

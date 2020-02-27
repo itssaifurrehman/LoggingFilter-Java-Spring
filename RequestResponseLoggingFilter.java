@@ -1,3 +1,5 @@
+package com.telintel.services.loggingservice.logutils;
+
 import java.io.IOException;
 import java.util.logging.LogRecord;
 
@@ -77,14 +79,15 @@ public class RequestResponseLoggingFilter implements Filter {
 
 				logger.info(logRequestTemplate);
 				chain.doFilter(myRequestWrapper, res);
-
+				
 				if (configuration.isResponseBody()) {
-					response.setCharacterEncoding("UTF-8");
+					res.setCharacterEncoding("UTF-8");
 					HttpServletResponseCopier responseCopier = new HttpServletResponseCopier((HttpServletResponse) res);
-					chain.doFilter(req, responseCopier);
-					responseCopier.flushBuffer();
+					chain.doFilter(myRequestWrapper, responseCopier);
 					byte[] responseDataCopier = responseCopier.getCopy();
 					responseBody = IOUtils.toString(responseDataCopier, res.getCharacterEncoding());
+					responseCopier.flushBuffer();
+
 					try {
 						jsonObjectResponse = new JSONObject(responseBody);
 						configuration = logService.findResponseParameters(configuration, jsonObjectResponse);
@@ -103,8 +106,9 @@ public class RequestResponseLoggingFilter implements Filter {
 				logResponseTemplate = logResponseTemplate.replace("#URL#", req.getRequestURL());
 				logResponseTemplate = logResponseTemplate.replace("#TIME#", Long.toString(endTime));
 				logger.info(logResponseTemplate);
-			} else
-				logger.info("[Error] [Request is not in database] [Check database]");
+			}else {
+				chain.doFilter(myRequestWrapper, res);
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
